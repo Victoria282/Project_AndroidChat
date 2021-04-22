@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Андроид Чат </string>
+    <string name="Registration_tittle"> Регистрация </string>
+    <string name="Authorization_tittle"> Авторизация </string>
+    <string name="Edit_email"> Введите e-mail.. </string>
+    <string name="Edit_name"> Введите имя.. </string>
+    <string name="Edit_password"> Введите пароль.. </string>
+    <string name="Edit_confirm_password"> Подтвердите пароль.. </string>
+    <string name="Registration_button"> Зарегистрироваться </string>
+    <string name="Authorization_button"> Войти </string>
+    <string name="question_textView"> Нет аккаунта? </string>
+    <string name="question_textView2"> Уже есть аккаунт? </string>
+    <string name="question_textViewLink"> <u>Регистрация </u></string>
+    <string name="question_textViewLink2"> <u>Войти </u></string>
+    <string name="menu_logout"> Выйти </string>
+    <string name="menu_exit"> Выйти из приложения</string>
+    <string name="Edit_message"> Введите сообщение..</string>
+    <string name="Toolbar_tittle"> Тут будет имя..</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment_chats">Сообщения</string>
+    <string name="hello_blank_fragment_users">Пользователи</string>
+    <string name="hello_blank_fragment_profile_user"> Профиль </string>
+</resources>
