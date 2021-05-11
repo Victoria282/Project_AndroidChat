@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,14 +40,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     // Создание одинаковых элементов на основе одного
     public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
         if(viewType == MESSAGE_RIGHT) {
-            View view = LayoutInflater.from(context).inflate(R.layout.message_item_right, parent, false);
-            return new MessageAdapter.ViewHolder(view);
+            view = LayoutInflater.from(context).inflate(R.layout.message_item_right, parent, false);
         }
         else {
-            View view = LayoutInflater.from(context).inflate(R.layout.message_item_left, parent, false);
-            return new MessageAdapter.ViewHolder(view);
+            view = LayoutInflater.from(context).inflate(R.layout.message_item_left, parent, false);
         }
+        return new ViewHolder(view);
     }
 
     // Устанавливаем значения в активити на основе класса-модели
@@ -55,11 +56,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         Messages messages = allMessages.get(position);
         holder.msg.setText(messages.getMessage());
         holder.Date.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", messages.getDate()));
+
         if(imageUrl.equals("default")) {
             holder.user_icon.setImageResource(R.drawable.avatar);
         } else {
             Glide.with(context).load(imageUrl).into(holder.user_icon);
         }
+
     }
 
     @Override

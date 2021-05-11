@@ -20,4 +20,6 @@
     <string name="hello_blank_fragment_chats">Сообщения</string>
     <string name="hello_blank_fragment_users">Пользователи</string>
     <string name="hello_blank_fragment_profile_user"> Профиль </string>
+    <string name="uploadPic">Загрузить фото</string>
+    <string name="choosePic">Выбрать фото</string>
 </resources>

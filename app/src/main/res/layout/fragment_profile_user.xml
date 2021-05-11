@@ -19,57 +19,79 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="40dp"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
        <RelativeLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
+           android:layout_marginTop="100dp"
+           android:layout_marginBottom="50dp"
+           android:background="@drawable/rounded_edit_text"
+           android:layout_marginLeft="20dp"
+           android:layout_marginRight="20dp"
            android:id="@+id/MainRelLayout">
            <TextView
                android:id="@+id/ProfileUserName"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_marginLeft="70dp"
-               android:layout_marginTop="65dp"
-               android:layout_toRightOf="@id/ProfilePic"
+               android:layout_centerHorizontal="true"
+               android:layout_marginTop="20dp"
                android:text=" "
                android:textColor="@color/black"
-               android:textSize="24sp"
+               android:textSize="35sp"
                android:textStyle="bold" />
            <TextView
                android:id="@+id/ProfileUserId"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_marginLeft="20dp"
-               android:layout_marginTop="110dp"
-               android:layout_toRightOf="@id/ProfilePic"
-               android:layout_below="@+id/nameOfUser"
-               android:text=" "
+               android:layout_centerHorizontal="true"
+               android:layout_marginTop="20dp"
+               android:layout_below="@id/ProfilePic"
                android:textColor="@color/black"
-               android:textSize="17sp" />
-           <ImageView
+               android:textSize="20sp" />
+
+           <de.hdodenhof.circleimageview.CircleImageView
                android:id="@+id/ProfilePic"
-               android:layout_width="120dp"
-               android:layout_height="120dp"
-               android:layout_marginStart="30dp"
-               android:layout_marginLeft="20dp"
+               android:layout_width="150dp"
+               android:layout_height="150dp"
                android:layout_marginTop="50dp"
-               android:src="@drawable/avatar" />
+               android:layout_below="@+id/ProfileUserName"
+               android:layout_centerHorizontal="true"
+               android:src="@drawable/avatar"
+               app:civ_border_width="2dp"
+               app:civ_border_color="#00A6FF"/>
+
+           <Button
+               android:id="@+id/chooseButton"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/ProfileUserId"
+               android:layout_marginTop="50dp"
+               android:layout_marginBottom="20dp"
+               android:background="@drawable/rounded_edit_text"
+               android:text="@string/choosePic"
+               android:textAllCaps="false"
+               android:layout_alignParentLeft="true"
+               android:layout_marginLeft="15dp"
+               android:textColor="@color/white"
+               android:textSize="18sp" />
 
            <Button
                android:id="@+id/uploadButton"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_below="@id/ProfilePic"
-               android:layout_marginLeft="20dp"
+               android:layout_below="@id/ProfileUserId"
+               android:layout_marginTop="50dp"
+               android:layout_marginBottom="40dp"
+               android:layout_toRightOf="@id/chooseButton"
+               android:background="@drawable/rounded_edit_text"
+               android:layout_alignParentRight="true"
+               android:text="@string/uploadPic"
                android:textAllCaps="false"
-               android:textStyle="italic"
-               android:textSize="12dp"
-               android:layout_marginTop="20dp"
+               android:layout_marginLeft="20dp"
+               android:layout_marginRight="15dp"
                android:textColor="@color/white"
-               android:background="#009BEE"
-               android:text="Загрузить аватар" />
+               android:textSize="18sp" />
        </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>

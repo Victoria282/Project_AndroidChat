@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -93,12 +94,11 @@ public class MessageActivity extends AppCompatActivity {
         intent = getIntent();
         // Данные о собеседнике (Из активити UserAdapter)
         String userId = intent.getStringExtra("userId");
-        // String opponentName = intent.getStringExtra("userName");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         // Звук отправленного смс
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.one);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.sound_send);
 
         // Обработчик кнопки отправки смс
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +109,7 @@ public class MessageActivity extends AppCompatActivity {
                 // Если пустое тело - предупреждение
                 // TRIM
                 if(message.equals("")) {
-                    Toast.makeText(MessageActivity.this, "Введите сообщение..", Toast.LENGTH_LONG);
+                    Toast.makeText(MessageActivity.this, "Введите сообщение..", Toast.LENGTH_LONG).show();
                 }
                 else {
                     // В качестве параметров id собеседника, текущего пользователя и тело сообщения
@@ -133,8 +133,9 @@ public class MessageActivity extends AppCompatActivity {
                 if(user.getImageUrl().equals("default")) {
                     picOfUser.setImageResource(R.drawable.avatar);
                 } else {
-                    Glide.with(MessageActivity.this).load(user.getImageUrl()).into(picOfUser);
+                    Glide.with(getApplicationContext()).load(user.getImageUrl()).into(picOfUser);
                 }
+
                 ShowMessage(user.getUserId(), userId, user.getImageUrl());
             }
             @Override
@@ -142,6 +143,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
+
     private void SendMessage(String user_id, String opponent_id, String message, long date) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> hashMap = new HashMap<>();

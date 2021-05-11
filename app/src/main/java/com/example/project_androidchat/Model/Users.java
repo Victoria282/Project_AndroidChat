@@ -1,7 +1,5 @@
 package com.example.project_androidchat.Model;
 
-import com.google.firebase.database.DataSnapshot;
-
 public class Users {
     // id / имя / url пользователя
     private String userId;

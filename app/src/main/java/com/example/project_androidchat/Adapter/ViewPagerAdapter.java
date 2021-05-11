@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     // ArrayList содержащий объекты типа Fragment(экраны) и String(заголовки)
-    private ArrayList<Fragment> fragments;
-    private ArrayList<String> tittles;
+    private ArrayList <Fragment> fragments;
+    private ArrayList <String> tittles;
 
     public ViewPagerAdapter(FragmentManager fm) {
         // Вызов класса FragmentManager для взаимодейсвтия между фрагментами

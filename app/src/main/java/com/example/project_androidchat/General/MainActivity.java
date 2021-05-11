@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Проверка, есть ли подключение к интернету
         if(!isOnline()) {
-            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Нет соединения с интернетом!", Toast.LENGTH_LONG).show();
             MainActivity.this.finish();
         }
 

@@ -101,15 +101,12 @@ public class LoginActivity extends AppCompatActivity {
                 // Проверка на непустые поля и валидация почты
                 if(TextUtils.isEmpty(email_source)) {
                     Email.setError("Введите почту!");
-                    return;
                 }
                 else if(TextUtils.isEmpty(password_source)) {
                     Password.setError("Введите пароль!");
-                    return;
                 }
                 else if(!isValidEmail(email_source)) {
                     Email.setError("Неправильный email!");
-                    return;
                 }
                 // Если данные корректны, логиним пользователя
                 else {
