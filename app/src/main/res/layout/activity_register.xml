@@ -9,7 +9,6 @@
     android:paddingHorizontal="30dp"
     android:id="@+id/RegisterActivity"
     tools:context=".General.RegisterActivity">
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,7 +16,6 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="40sp" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +38,6 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true" />
     </RelativeLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -124,14 +121,12 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:orientation="horizontal">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/question_textView2"
             android:textColor="#ffffff"
             android:textSize="20sp" />
-
         <TextView
             android:id="@+id/LinkSignIn"
             android:layout_width="wrap_content"

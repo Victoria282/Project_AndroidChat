@@ -2,6 +2,8 @@ package com.example.project_androidchat.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         this.context = context;
         this.allUsers = allUsers;
     }
+
     @NonNull
     @Override
     // onCreateViewHolder() создает новый объект ViewHolder всякий раз, когда RecyclerView нуждается в этом.
@@ -46,7 +49,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Users users = allUsers.get(position);
         holder.userName.setText(users.getUsername());
-        holder.userId.setText(users.getUserId());
+        //holder.userId.setText(users.getUserId());
         // Если id изображение дефолт -> устанавливаем иконку из drawable (стандартную)
         if(users.getImageUrl().equals("default")) {
             holder.imageView.setImageResource(R.drawable.avatar);
@@ -56,6 +59,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             Glide.with(context).load(users.getImageUrl()).into(holder.imageView);
         }
 
+        if(users.getStatus().equals("online")) {
+            System.out.println("ВНИМАНИЕ"+ users.getStatus());
+            holder.statusOnline.setVisibility(View.VISIBLE);
+            holder.statusOffline.setVisibility(View.GONE);
+        }
+        else {
+            holder.statusOffline.setVisibility(View.VISIBLE);
+            holder.statusOnline.setVisibility(View.GONE);
+        }
         // Обработчик событий нажатия на чат с определенным пользователем
         // Создание активности для общения с пользователем
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -80,14 +92,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         // Атрибуты каждого пользователя в приложении (Аватар, Имя)
         public TextView userName;
         public ImageView imageView;
-        public TextView userId;
+        //public TextView userId;
+        public ImageView statusOnline;
+        public ImageView statusOffline;
 
         public ViewHolder(View itemView) {
             super(itemView);
             // Получение полей из user.xml
             userName = itemView.findViewById(R.id.textViewName);
             imageView = itemView.findViewById(R.id.imageViewUser);
-            userId = itemView.findViewById(R.id.textViewId);
+            //userId = itemView.findViewById(R.id.textViewId);
+            statusOnline = itemView.findViewById(R.id.online);
+            statusOffline = itemView.findViewById(R.id.offline);
         }
     }
+
 }

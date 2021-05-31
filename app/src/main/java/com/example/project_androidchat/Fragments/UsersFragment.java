@@ -51,7 +51,7 @@ public class UsersFragment extends Fragment {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 allUsers.clear();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Users user = snapshot.getValue(Users.class);

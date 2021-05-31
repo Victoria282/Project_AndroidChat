@@ -13,40 +13,60 @@
     android:background="@drawable/rounded_edit_text"
     android:paddingLeft="30dp">
 
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/online"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:src="#26FF00" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/offline"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:visibility="gone"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="#FF0505" />
+
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewUser"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:paddingTop="10dp"
         android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dp"
         android:src="@drawable/avatar"
         app:civ_border_width="2dp"
-        app:civ_border_color="#00A6FF"
+        app:civ_border_color="#FF39BAFF"
         android:layout_alignParentStart="true" />
-
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="165dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="80dp"
-        android:paddingTop="10dp"
-        android:text="TextView"
+        android:layout_marginLeft="50dp"
+        android:layout_centerVertical="true"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:layout_toRightOf="@+id/imageViewUser"
         tools:ignore="MissingConstraints" />
-
+    <!--
     <TextView
         android:id="@+id/textViewId"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:paddingLeft="30dp"
+        android:paddingLeft="20dp"
         android:layout_marginTop="10dp"
-        android:text="TextView"
         android:textColor="#009BEE"
+        android:textSize="12sp"
         android:layout_below="@+id/textViewName"
         android:layout_toRightOf="@+id/imageViewUser"
         tools:layout_editor_absoluteX="128dp"
         tools:layout_editor_absoluteY="50dp"
         tools:ignore="MissingConstraints" />
+        -->
 </RelativeLayout>

@@ -1,14 +1,15 @@
 package com.example.project_androidchat.General;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -60,6 +61,7 @@ public class MessageActivity extends AppCompatActivity {
     public FirebaseAuth auth;
     public FirebaseUser firebaseUser;
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,15 @@ public class MessageActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        picOfUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MessageActivity. this, AboutUserActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         
         intent = getIntent();
         // Данные о собеседнике (Из активити UserAdapter)
@@ -107,7 +118,6 @@ public class MessageActivity extends AppCompatActivity {
                 String message = editText.getText().toString().trim();
                 long date = new Date().getTime();
                 // Если пустое тело - предупреждение
-                // TRIM
                 if(message.equals("")) {
                     Toast.makeText(MessageActivity.this, "Введите сообщение..", Toast.LENGTH_LONG).show();
                 }
@@ -120,9 +130,11 @@ public class MessageActivity extends AppCompatActivity {
                 editText.setText("");
             }
         });
+
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
+        // Получить url пользователя
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -135,12 +147,10 @@ public class MessageActivity extends AppCompatActivity {
                 } else {
                     Glide.with(getApplicationContext()).load(user.getImageUrl()).into(picOfUser);
                 }
-
                 ShowMessage(user.getUserId(), userId, user.getImageUrl());
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
     }
 
@@ -162,19 +172,35 @@ public class MessageActivity extends AppCompatActivity {
                 lMessages.clear();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Messages messages = snapshot.getValue(Messages.class);
-                    if(messages.getReceiver().equals(userId) && messages.getSender().equals(opponentId)
-                    || messages.getSender().equals(userId) && messages.getReceiver().equals(opponentId)) {
+
+                    if(messages.getReceiver().equals(opponentId) && messages.getSender().equals(userId) || messages.getReceiver().equals(userId) && messages.getSender().equals(opponentId)) {
                         lMessages.add(messages);
                     }
                     messageAdapter = new MessageAdapter(MessageActivity.this, lMessages, imageUrl);
                     recyclerView.setAdapter(messageAdapter);
-                    // Прокрутка к нижнему смс сообщению
-                    recyclerView.scrollToPosition(messageAdapter.getItemCount() - 1);
+                    recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
                 }
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
+    }
+    public void CheckStatusUser(String status) {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
+        reference.updateChildren(hashMap);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CheckStatusUser("online");
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        CheckStatusUser("offline");
     }
 }

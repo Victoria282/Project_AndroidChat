@@ -100,26 +100,21 @@ public class RegisterActivity extends AppCompatActivity {
                 // Проверка на непустые поля и валидация email
                 if(TextUtils.isEmpty(email_source)) {
                     Email.setError("Введите email!");
-                    return;
                 }
                 else if(TextUtils.isEmpty(password_source)) {
                     Password.setError("Введите пароль!");
-                    return;
                 }
                 else if(password_source.length() < 6) {
                     Password.setError("Пароль не меньше 6 символов!");
                 }
                 else if(TextUtils.isEmpty(username_source)) {
                     userName.setError("Введите имя пользователя!");
-                    return;
                 }
                 else if(!isValidEmail(email_source)) {
                     Email.setError("Неправильный email!");
-                    return;
                 }
                 else if(!password_source.equals(password_confirm_source)) {
                     ConfirmPassword.setError("Разные пароли!");
-                    return;
                 }
                 else {
                     // В случае корректности данных переходим в функцию регистрации
@@ -147,10 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Текущий пользователь
                             firebaseUser = auth.getCurrentUser();
-
-                            // Получаем id зарегистрированного пользователя
                             String userId = firebaseUser.getUid();
 
                             // Добавляем колонку с id пользователем
@@ -161,12 +153,12 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("userId", userId);
                             hashMap.put("userName", username_source);
                             hashMap.put("imageUrl", "default");
+                            hashMap.put("status", "offline");
 
                             myRef.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Toast.makeText(RegisterActivity.this, "Регистрация прошла успешно", Toast.LENGTH_LONG).show();
-                                    // Переход на главную активити с пользователями и сообщениями
                                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -187,8 +179,7 @@ public class RegisterActivity extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(cs);
         if (cm.getActiveNetworkInfo() == null) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }

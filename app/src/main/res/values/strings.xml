@@ -16,10 +16,10 @@
     <string name="menu_exit"> Выйти из приложения</string>
     <string name="Edit_message"> Введите сообщение..</string>
     <string name="Toolbar_tittle"> Тут будет имя..</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment_chats">Сообщения</string>
     <string name="hello_blank_fragment_users">Пользователи</string>
     <string name="hello_blank_fragment_profile_user"> Профиль </string>
     <string name="uploadPic">Загрузить фото</string>
     <string name="choosePic">Выбрать фото</string>
+    <string name="inputMsg">Введите сообщение..</string>
 </resources>

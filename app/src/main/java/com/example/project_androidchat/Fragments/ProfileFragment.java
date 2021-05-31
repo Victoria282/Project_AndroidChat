@@ -51,7 +51,9 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class ProfileFragment extends Fragment {
+
     public ProfileFragment() { }
+
     // Имя и аватар пользователя
     TextView ProfileUserName;
     ImageView ProfilePic;
@@ -65,17 +67,12 @@ public class ProfileFragment extends Fragment {
     // Код запроса
     private final int PICK_IMAGE_REQUEST = 1;
 
+    // storageReference укажет на загруженный файл
+    StorageReference storageReference;
+
     DatabaseReference databaseReference;
     FirebaseUser firebaseUser;
 
-
-    // Для загрузки фото в Firebase
-
-    // storage будет использоваться для создания экземпляра FirebaseStorage
-    FirebaseStorage storage;
-
-    // storageReference укажет на загруженный файл
-    StorageReference storageReference;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,9 +83,6 @@ public class ProfileFragment extends Fragment {
         ProfileId = view.findViewById(R.id.ProfileUserId);
         uploadButton = view.findViewById(R.id.uploadButton);
         chooseButton = view.findViewById(R.id.chooseButton);
-
-        // Окно ожидания
-        ProgressDialog progressDialog = new ProgressDialog(this.getContext());
 
         // Ссылки на хранилище
         storageReference = FirebaseStorage.getInstance().getReference("avatars");
@@ -110,8 +104,7 @@ public class ProfileFragment extends Fragment {
                 }
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
 
         // Вызов метода для выбора фото из галереи
@@ -129,7 +122,6 @@ public class ProfileFragment extends Fragment {
                 uploadImage();
             }
         });
-
         return view;
     }
 
@@ -138,7 +130,8 @@ public class ProfileFragment extends Fragment {
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        /*intent.setAction(Intent.ACTION_GET_CONTENT);*/
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
@@ -152,7 +145,9 @@ public class ProfileFragment extends Fragment {
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null ) {
             filePath = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getContentResolver(), filePath);
+                // Uri selectedImage = data.getData();
+                // ProfilePic.setImageURI(selectedImage);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap((getActivity()).getContentResolver(), filePath);
                 ProfilePic.setImageBitmap(bitmap);
             }  catch (IOException e) {
                 e.printStackTrace();
@@ -161,20 +156,17 @@ public class ProfileFragment extends Fragment {
     }
 
     private void uploadImage() {
-
-        if(filePath != null)
-        {
+        if(filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getContext());
-            progressDialog.setTitle("Uploading...");
+            progressDialog.setTitle("Загрузка...");
             progressDialog.show();
 
             StorageReference ref = storageReference.child(UUID.randomUUID().toString());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Успешно!", Toast.LENGTH_SHORT).show();
                             databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("imageUrl", filePath.toString());
@@ -185,7 +177,7 @@ public class ProfileFragment extends Fragment {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(getContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Ошибка! "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -193,9 +185,9 @@ public class ProfileFragment extends Fragment {
                         public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                            progressDialog.setMessage("Загружено "+(int)progress+"%");
                         }
                     });
-        }
+         }
     }
 }

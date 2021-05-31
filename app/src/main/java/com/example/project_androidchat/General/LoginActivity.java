@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         // Смена фона в зависимости от времени суток
         Calendar background = Calendar.getInstance();
         int timeOfDay = background.get(Calendar.HOUR_OF_DAY);
@@ -145,7 +146,8 @@ public class LoginActivity extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(cs);
         if (cm.getActiveNetworkInfo() == null) {
             return false;
-        } else {
+        }
+        else {
             return true;
         }
     }

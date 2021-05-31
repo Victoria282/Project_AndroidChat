@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/mes"
     tools:context=".General.MessageActivity">
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="414dp"
@@ -17,8 +16,6 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="-3dp"
         tools:layout_editor_absoluteY="0dp" />
-
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/picOfUser"
         android:layout_width="55dp"
@@ -29,46 +26,38 @@
         android:src="@drawable/avatar"
         app:civ_border_width="2dp"
         app:civ_border_color="#FFFFFF" />
-
     <TextView
         android:id="@+id/nameOfUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:layout_toRightOf="@+id/picOfUser"
         android:layout_marginLeft="25dp"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:layout_marginTop="20dp"
-        tools:ignore="MissingConstraints"
-        />
-
+        tools:ignore="MissingConstraints" />
     <ImageButton
         android:id="@+id/back_btn"
-        android:layout_width="30dp"
-        android:layout_height="25dp"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="18dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/back" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
         android:id="@+id/Bottom_rel_lay"
         android:layout_below="@+id/toolbar">
-
         <EditText
             android:layout_width="350dp"
             android:layout_height="60dp"
             android:id="@+id/EditMessage"
-            android:hint="Введите сообщение.."
+            android:hint="@string/inputMsg"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_alignParentBottom="true"
-            />
-
+            android:layout_alignParentBottom="true" />
         <ImageButton
             android:id="@+id/send_btn"
             android:layout_width="35dp"
@@ -78,13 +67,12 @@
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/send2" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/RecyclerViewMessages"
             android:layout_above="@+id/EditMessage"
+            app:layoutManager="LinearLayoutManager"
+            app:stackFromEnd="true"
             android:layout_height="699dp" />
     </RelativeLayout>
-
-
 </RelativeLayout>

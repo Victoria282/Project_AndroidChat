@@ -17,9 +17,9 @@ public class BackgroundChanges {
     public BackgroundChanges(int currentDate, LinearLayout idLayout) {
         this.currentDate = currentDate;
         this.idLayout = idLayout;
-        // Метод проверки времени и выбора фона
         CheckTime(this.currentDate, this.idLayout);
     }
+
     public void CheckTime(int currentDate, LinearLayout idLayout) {
         if(currentDate >= 12 && currentDate < 17){
             // День

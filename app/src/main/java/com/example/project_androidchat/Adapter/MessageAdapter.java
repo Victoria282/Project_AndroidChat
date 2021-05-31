@@ -1,22 +1,31 @@
 package com.example.project_androidchat.Adapter;
 
 import android.content.Context;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.project_androidchat.Model.Messages;
+import com.example.project_androidchat.Model.Users;
 import com.example.project_androidchat.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -37,6 +46,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         this.imageUrl = imageUrl;
     }
 
+    @NonNull
     @Override
     // Создание одинаковых элементов на основе одного
     public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,16 +63,42 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     // Устанавливаем значения в активити на основе класса-модели
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        DatabaseReference reference;
+        FirebaseUser firebaseUser;
+
         Messages messages = allMessages.get(position);
         holder.msg.setText(messages.getMessage());
         holder.Date.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", messages.getDate()));
 
-        if(imageUrl.equals("default")) {
-            holder.user_icon.setImageResource(R.drawable.avatar);
-        } else {
-            Glide.with(context).load(imageUrl).into(holder.user_icon);
+        // Изображение текущего пользователя из Firebase
+        /* if(holder.user_icon_right != null) {
+            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Users users = snapshot.getValue(Users.class);
+                    String imageUrl = users.getImageUrl();
+                    if(imageUrl.equals("default")) {
+                        holder.user_icon_right.setImageResource(R.drawable.avatar);
+                    }
+                    else {
+                        Glide.with(context).load(imageUrl).into(holder.user_icon_right);
+                    }
+                }
+                @Override
+              public void onCancelled(@NonNull DatabaseError error) { }
+            });
         }
-
+         */
+        // image url собеседника
+        if(holder.user_icon_left != null) {
+            if(imageUrl.equals("default")) {
+                holder.user_icon_left.setImageResource(R.drawable.avatar);
+            } else {
+                Glide.with(context).load(imageUrl).into(holder.user_icon_left);
+            }
+        }
     }
 
     @Override
@@ -74,14 +110,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Атрибуты каждого пользователя в приложении (Аватар, Имя)
         public TextView msg;
-        public ImageView user_icon;
+        public ImageView user_icon_left;
+        // public ImageView user_icon_right;
         public TextView Date;
 
         public ViewHolder(View itemView) {
             super(itemView);
             // Получение полей
             msg = itemView.findViewById(R.id.message);
-            user_icon = itemView.findViewById(R.id.user_avatar);
+            user_icon_left = (ImageView)itemView.findViewById(R.id.user_avatar_left);
+            // user_icon_right = (ImageView)itemView.findViewById(R.id.user_avatar_right);
             Date = itemView.findViewById(R.id.date);
         }
     }
